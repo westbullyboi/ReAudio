@@ -1,0 +1,61 @@
+{
+  "name": "@reaudio/electron-vst",
+  "version": "0.1.0",
+  "description": "ReAudio Electron VST3 Plugin Wrapper",
+  "main": "./dist/main.js",
+  "homepage": "./",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"tsc --watch\" \"wait-on http://localhost:5173 && electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "@reaudio/core": "workspace:*",
+    "@reaudio/react": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "concurrently": "^8.2.2",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "typescript": "^5.3.3",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.reaudio.vst",
+    "productName": "ReAudio VST",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  }
+}

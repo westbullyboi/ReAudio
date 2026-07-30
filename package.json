@@ -7,7 +7,10 @@
   "scripts": {
     "build": "turbo build",
     "build:vst": "turbo build && node scripts/package-vst.js",
+    "build:vst3": "turbo build && node scripts/build-vst3.js",
+    "build:electron": "turbo build --filter @reaudio/electron-vst",
     "dev": "turbo dev",
+    "electron:dev": "pnpm --filter @reaudio/electron-vst electron:dev",
     "test": "turbo test",
     "lint": "turbo lint"
   },
