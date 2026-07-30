@@ -1,8 +1,11 @@
 # Dependencies
 node_modules/
+pnpm-lock.yaml
 
 # Build outputs
+dist/
 .turbo/
+*.tsbuildinfo
 
 # OS / Editor
 .DS_Store
