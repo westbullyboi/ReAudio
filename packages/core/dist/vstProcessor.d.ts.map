@@ -1,0 +1,1 @@
+{"version":3,"file":"vstProcessor.d.ts","sourceRoot":"","sources":["../src/vstProcessor.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,yBAAyB,EAAE,MAAM,aAAa,CAAC;AAWxD,qBAAa,wBAAyB,SAAQ,yBAAyB;IACrE,OAAO,CAAC,SAAS,CAAkB;;IAWnC,OAAO,CACL,MAAM,EAAE,YAAY,EAAE,EAAE,EACxB,OAAO,EAAE,YAAY,EAAE,EAAE,EACzB,UAAU,EAAE,MAAM,CAAC,MAAM,EAAE,YAAY,CAAC,GACvC,OAAO;CAcX"}
