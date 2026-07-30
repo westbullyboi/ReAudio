@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@reaudio/core": "workspace:*",
-    "@reaudio/react": "workspace:*",
+    "@reaudio/core": "file:../../packages/core",
+    "@reaudio/react": "file:../../packages/react",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -2,8 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@reaudio/core": ["../core/src/index"],
+      "@reaudio/core/*": ["../core/src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
