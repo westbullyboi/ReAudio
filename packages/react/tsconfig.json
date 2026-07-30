@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist",
     "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
-      "@reaudio/core": ["../core/src"]
+      "@reaudio/core": ["../core/src/index"],
+      "@reaudio/core/*": ["../core/src/*"]
     }
   },
   "include": ["src"],

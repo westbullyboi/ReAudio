@@ -31,7 +31,7 @@ export function useVstBridge(): UseVstBridgeResult {
   const toggleVstModeSimulation = useCallback(() => {
     setIsVstMode((prev) => {
       const nextMode = !prev;
-      setVstInfo((current) => ({
+      setVstInfo((current: VstInfo) => ({
         ...current,
         isVst: nextMode,
         hostName: nextMode ? 'Suara VST3 Host (Cubase)' : 'Web Browser',
