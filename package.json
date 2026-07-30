@@ -6,6 +6,7 @@
   "packageManager": "pnpm@9.0.0",
   "scripts": {
     "build": "turbo build",
+    "build:vst": "turbo build && node scripts/package-vst.js",
     "dev": "turbo dev",
     "test": "turbo test",
     "lint": "turbo lint"
