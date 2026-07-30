@@ -20,9 +20,21 @@ export function AudioProvider({ children }: AudioProviderProps) {
   const initialize = useCallback(async () => {
     if (audioContext) return;
 
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContextClass) {
+      console.error('[ReAudio] Web Audio API is not supported in this browser.');
+      return;
+    }
+
+    const ctx = new AudioContextClass();
     setAudioContext(ctx);
     setIsInitialized(true);
+
+    if (ctx.state === 'suspended') {
+      await ctx.resume().catch(() => {
+        /* Autoplay policy might block initial resume without user gesture */
+      });
+    }
   }, [audioContext]);
 
   const resume = useCallback(async () => {
@@ -31,10 +43,39 @@ export function AudioProvider({ children }: AudioProviderProps) {
     }
   }, [audioContext]);
 
+  // Clean up AudioContext when Provider unmounts
+  useEffect(() => {
+    return () => {
+      if (audioContext && audioContext.state !== 'closed') {
+        audioContext.close().catch(() => {});
+      }
+    };
+  }, [audioContext]);
+
+  // Track AudioContext state changes (e.g. suspended, running, closed)
+  useEffect(() => {
+    if (!audioContext) return;
+
+    const handleStateChange = () => {
+      if (audioContext.state === 'running') {
+        setIsInitialized(true);
+      }
+    };
+
+    audioContext.addEventListener('statechange', handleStateChange);
+    return () => {
+      audioContext.removeEventListener('statechange', handleStateChange);
+    };
+  }, [audioContext]);
+
+  // Auto-resume on user gesture if AudioContext exists and is suspended
   useEffect(() => {
     const handleUserInteraction = async () => {
-      await initialize();
-      await resume();
+      if (!audioContext) {
+        await initialize();
+      } else if (audioContext.state === 'suspended') {
+        await resume();
+      }
     };
 
     document.addEventListener('click', handleUserInteraction, { once: true });
@@ -44,7 +85,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
       document.removeEventListener('click', handleUserInteraction);
       document.removeEventListener('keydown', handleUserInteraction);
     };
-  }, [initialize, resume]);
+  }, [audioContext, initialize, resume]);
 
   return (
     <AudioContext.Provider value={{ audioContext, isInitialized, initialize, resume }}>

@@ -13,7 +13,11 @@ export class AudioWorkletNodeWrapper extends AudioWorkletNode {
     super(context, name, options);
   }
 
-  getParameter(name: string): AudioParam {
-    return this.parameters.get(name)!;
+  getParameter(name: string): AudioParam | undefined {
+    const param = this.parameters.get(name);
+    if (!param) {
+      console.warn(`[ReAudio] AudioParam '${name}' not found on AudioWorkletNode.`);
+    }
+    return param;
   }
 }
